@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Appointment</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+
+    <div class ="banner">
+        <div class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Reserve.html">Reserve appointment</a></li>
+                <li><a href="about.html">Story</a></li>
+            </ul>
+        </div>
+
+    
+        <div class="content">
+            <h2>Reserve Appointment</h2>
+            <p1>Opening hours: 08-16<br>Address: Keskuskatu 27, 48100 Kotka<br>You can make reservation by calling me or by email:<br>tel.0401231234<br>example@gmail.com</p1>
+            
+        </div>
+
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1966.869935982446!2d26.937057277187435!3d60.46386947518353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4691734b7b8dcbeb%3A0x6f258b725828a8c8!2sKeskuskatu%2027%2C%2048100%20Kotka!5e0!3m2!1sfi!2sfi!4v1714428612120!5m2!1sfi!2sfi" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            
+        </div>
+
+
+
+    </div>
+
+    <div class="content">
+        <input type="text" id="datepicker" placeholder="Select date">
+
+        <select id="hourSelect">
+            <option value="08">08:00 AM</option>
+            <option value="09">09:00 AM</option>
+           
+        </select>
+        <div id="reservationResult"></div>
+    </div>
+</div>
+
+
+<script>
+        $(function() {
+            
+            var hourSelect = $("#hourSelect");
+            for (var hour = 8; hour <= 16; hour++) {
+                var formattedHour = hour < 10 ? '0' + hour : hour;
+                var optionText = formattedHour + ':00';
+                hourSelect.append($('<option>', { value: hour, text: optionText }));
+            }
+
+            $("#hourSelect").on("change", function() {
+                var selectedDate = $("#datepicker").val();
+                var selectedHour = $(this).val();
+                updateAvailableSlots(selectedDate, selectedHour);
+            });
+
+            function updateAvailableSlots(selectedDate, selectedHour) {
+                var isFree = Math.random() < 0.5; 
+                var status = isFree ? 'Free' : 'Reserved';
+                var resultMessage = 'Selected Date: ' + selectedDate + ', Selected Hour: ' + selectedHour + ':00 ' + status;
+                $("#reservationResult").text(resultMessage);
+            }
+        });
+</script>
+
+</body>
+</html>
