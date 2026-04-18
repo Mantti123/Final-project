@@ -52,6 +52,41 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
+app.get("/api/reservations", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT id, name, date, time, created_at FROM reservations ORDER BY created_at DESC"
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Reservation query failed:", error);
+    res.status(500).json({ error: "Reservation query failed" });
+  }
+});
+
+app.post("/api/reservations", async (req, res) => {
+  try {
+    const { name, date, time } = req.body;
+
+    // simple validation (backend-side)
+    if (!name || !date || !time) {
+      return res.status(400).json({ error: "Missing required fields: name, date, time" });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO reservations (name, date, time)
+       VALUES ($1, $2, $3)
+       RETURNING id, name, date, time, created_at`,
+      [name, date, time]
+    );
+
+    res.status(201).json({ ok: true, reservation: result.rows[0] });
+  } catch (error) {
+    console.error("Reservation insert failed:", error);
+    res.status(500).json({ ok: false, error: "Reservation insert failed" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`API listening on port ${PORT}`);
 });

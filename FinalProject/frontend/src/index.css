@@ -440,3 +440,34 @@ a.button:hover{
   display: block;
 }
 
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.reservations-table th,
+.reservations-table td {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 8px;
+  text-align: left;
+}
+
+.reservations-table th {
+  font-family: Apple Chancery;
+  font-weight: 600;
+}
+
+.reservations-table tr:hover td {
+  background: rgba(255,255,255,0.06);
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  color: #fff;
+}
+

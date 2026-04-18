@@ -13,6 +13,9 @@ function NavBar() {
         <li>
           <Link to="/status">Status</Link>
         </li>
+        <li>
+          <Link to="/reservations">Reservations</Link>
+        </li>
       </ul>
     </div>
   );

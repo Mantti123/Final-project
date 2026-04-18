@@ -39,6 +39,7 @@ export default function ReservePage() {
         fieldErrors[issue.path[0]] = issue.message;
       }
       setErrors(fieldErrors);
+      setStatus("error");
       return;
     }
 
@@ -48,20 +49,27 @@ export default function ReservePage() {
       // talteen se data, jonka käyttäjä syötti
       setSubmittedData(result.data);
 
-      const res = await fetch("https://httpbin.org/post", {
+      const res = await fetch("/api/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(result.data),
       });
 
-      const json = await res.json();
-      setResponseJson(json);
+      const payload = await res.json(); // luetaan response vain kerran
+
+      if (!res.ok) {
+        console.error("API error:", payload);
+        setStatus("error");
+        return;
+      }
+
+      setResponseJson(payload);
       setStatus("success");
     } catch (err) {
+      console.error(err);
       setStatus("error");
     }
   }
-
   return (
     <div className="banner">
       <NavBar />
